@@ -28,17 +28,36 @@ This repository contains the GUI tool for the selection and addition of signals 
 3. The GUI tool is also dependent on the .vspec files defined in the <a href="https://github.com/COVESA/vehicle_signal_specification">Vehicle Signal Specification</a> repository and the corresponding <a href="https://github.com/COVESA/vss-tools">VSS-tools</a> repository. 
 
 ## Structure of the repository 
-1. [container](./container) - Contains the dockerfile recipe for the container image that is used to run the necessary scripts. 
-2. [scripts](./scripts) - Contains the necessary Python scripts with respect to the GUI tool. 
-3. [documentation](./documentation) - Contains the document explaining the features of the GUI tool. 
+1. [container](./container) - Contains the Docker recipe for building and running the GUI environment. 
+2. [scripts](./scripts) - Contains the Python GUI scripts and the VSS submodule. 
+3. [docs](./docs) - Contains the Sphinx documentation for the project. 
 
-## Running the script 
-1. Update the submodules linked to the repository: `git submodule update --init --recursive`. 
-2. Since the GUI tool has been tested upto v4.x of the VSS, navigate to the vss repository located in the [scripts] (./scripts/) folder and checkout to the required version: `git checkout v4.1`. 
-3. Update the submodules linked to vss repository: `git submodule update --init --recursive`.
-4. Build the container image by running the `build.sh` script in the [container](./container/) folder. 
-5. Run the container: `docker run -ti -e DISPLAY=$(hostname).local:0 -it vss_gui:latest`. In case of WSL, ensure that x11 forwarding is enabled and working. 
-6. Run the Python `vss_gui.py`script in `/app/gui` folder.  
+## Running the GUI locally 
+1. Update the submodules linked to the repository:
+   - `git submodule update --init --recursive`
+2. Create and activate a Python virtual environment:
+   - `python3 -m venv .venv`
+   - `source .venv/bin/activate`
+3. Install the required Python packages:
+   - `pip install --upgrade pip`
+   - `pip install anytree PyYAML screeninfo graphql-core`
+4. Start the GUI script:
+   - `.venv/bin/python scripts/gui/vss_gui.py`
+
+## Running the GUI in Docker 
+1. Update the repository submodules:
+   - `git submodule update --init --recursive`
+2. Build the container image:
+   - `cd container`
+   - `./build.sh`
+3. Run the container with X11 forwarding enabled:
+   - `docker run -ti -e DISPLAY=$(hostname).local:0 -it vss_gui:latest`
+4. Inside the running container, start the GUI:
+   - `python /app/gui/vss_gui.py`
+
+## Notes 
+- The GUI depends on the `scripts/vss` submodule from the Vehicle Signal Specification repository and the `vss-tools` package contained therein.
+- The local Docker setup already installs `python3-tk`, so the GUI can run with Tkinter support.
 
 ## Dependencies to other repositories
 This tool can be used in combination with application framework: https://github.com/eclipse-autoapiframework/application-framework

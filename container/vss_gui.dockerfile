@@ -19,12 +19,12 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
  
-# Create a virtual environment for Python 3.10
-RUN python3.10 -m venv /opt/venv
+# Create a virtual environment for Python
+RUN python3 -m venv /opt/venv
  
 # Activate the virtual environment and install Python libraries
-RUN /opt/venv/bin/pip install --upgrade pip
-RUN /opt/venv/bin/pip install anytree pyyaml screeninfo graphql-core
+RUN /opt/venv/bin/pip install --upgrade pip setuptools wheel
+RUN /opt/venv/bin/pip install anytree PyYAML screeninfo graphql-core
  
 # Set the virtual environment as the default Python environment
 ENV PATH="/opt/venv/bin:$PATH"
@@ -36,5 +36,5 @@ RUN python --version && pip list
 WORKDIR /app
  
 # Copy the files
-COPY /scripts/gui/ /app/gui
-COPY /scripts/vss/ /app/vss
+COPY scripts/gui/ /app/gui
+COPY scripts/vss/ /app/vss

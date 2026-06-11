@@ -5,11 +5,10 @@ import os
 # Get the current working directory
 current_dir = os.path.dirname(__file__)
 
-# Construct the relative path
-relative_path = os.path.join(current_dir, '../vss/vss-tools')
-
-# Add the relative path to sys.path
-sys.path.append(relative_path)
+# Add the VSS tools package to Python path
+vss_tools_path = os.path.abspath(os.path.join(current_dir, '../vss/vss-tools'))
+vspec_include_path = os.path.abspath(os.path.join(current_dir, '../vss/spec'))
+sys.path.append(vss_tools_path)
 
 import vspec2x
 from vspec.vssexporters import vss2json
@@ -182,7 +181,7 @@ class TextSearchApp:
         app.tree_frame2.grid_rowconfigure(0, weight=1)
 
         # table/treeview widget to display selected items
-        app.tree_selected = ttk.Treeview(app.tree_frame2 , columns=("Signal", "Type", "DataType","Unit", "Min", "Max","Default", "Allowed","Vspec","Description"), show="headings")
+        app.tree_selected = ttk.Treeview(app.tree_frame2 , columns=("Signal", "Type", "DataType","Unit", "Min", "Max","Default", "Allowed","Description"), show="headings")
         app.tree_selected.heading("Signal", text="Signal")
         app.tree_selected.heading("Type", text="Type")
         app.tree_selected.heading("DataType", text="DataType")
@@ -273,7 +272,7 @@ class TextSearchApp:
         app.yaml_File_path = app.folder_path + "/units.yaml"
         app.Internal_file = app.folder_path + "/Donot_Delete_Internal_file.csv"
 
-        sys.argv = [os.path.basename(__file__), "-I", "../spec", "-u", app.yaml_File_path, app.vspec_file_path, app.Internal_file]
+        sys.argv = [os.path.basename(__file__), "-I", vspec_include_path, "-u", app.yaml_File_path, app.vspec_file_path, app.Internal_file]
         vspec2x.main(sys.argv[1:])
         
         app.data_File_path = app.folder_path  + "/Donot_Delete_Internal_file.csv"
@@ -289,11 +288,7 @@ class TextSearchApp:
           
     # Code to Delete the Intermediate file created while using the application      
     def delete_file_on_exit(app):
-                if os.path.isfile(app.data_File_path):
-                    print(f"File found: {app.data_File_path}")
-                    app.file_found = True
-
-                if app.file_found:
+                if hasattr(app, 'data_File_path') and os.path.isfile(app.data_File_path):
                      try:
                          os.remove(app.data_File_path)
                          print(f"Deleted File: {app.data_File_path}")
@@ -424,7 +419,7 @@ class TextSearchApp:
             try:
                 with open(csv_file_path, mode='w', newline='', encoding='utf-8') as file:
                     writer = csv.writer(file)
-                    writer.writerow(["Signal", "Type", "DataType","Unit", "Min", "Max","Default", "Allowed","Vspec","Description"])  # Write header
+                    writer.writerow(["Signal", "Type", "DataType","Unit", "Min", "Max","Default", "Allowed","Description"])  # Write header
                     writer.writerows(selected_data)
                 messagebox.showinfo("Success", f"CSV file has been saved at {csv_file_path}")
             except Exception as e:

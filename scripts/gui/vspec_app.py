@@ -4,6 +4,12 @@ import sys
 import os
 import csv
 import ast  # Import the ast module
+
+current_dir = os.path.dirname(__file__)
+vss_tools_path = os.path.abspath(os.path.join(current_dir, '../vss/vss-tools'))
+vspec_include_path = os.path.abspath(os.path.join(current_dir, '../vss/spec'))
+sys.path.append(vss_tools_path)
+
 import vspec2x
 from vspec.vssexporters import vss2csv
 import yaml
@@ -32,6 +38,7 @@ class VSPECApp:
         self.file_var = tk.StringVar()
         self.file_dropdown = ttk.Combobox(root, textvariable=self.file_var)
         self.file_dropdown.bind("<<ComboboxSelected>>", self.load_file)
+        self.file_dropdown.pack(pady=10, fill=tk.X)
 
         # Table/treeview for Signal details
         self.tree = ttk.Treeview(root, columns=(
@@ -126,7 +133,7 @@ class VSPECApp:
         if not self.dropdown_data:
             messagebox.showerror("Error", "No descriptions or definitions found in the YAML file.")
 
-        sys.argv = [os.path.basename(__file__), "-I", "../spec", "-u", yaml_File_path, vspec_file_path,
+        sys.argv = [os.path.basename(__file__), "-I", vspec_include_path, "-u", yaml_File_path, vspec_file_path,
                     self.Internal_file]
         vspec2x.main(sys.argv[1:])
 
