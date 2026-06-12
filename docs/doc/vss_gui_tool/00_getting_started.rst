@@ -56,7 +56,7 @@ Running the GUI locally
    - ``pip install --upgrade pip``
    - ``pip install anytree PyYAML screeninfo graphql-core``
 
-4. You can go to step 5 and start the GUI, in casee python3-tk is missing:
+4. You can go to step 5 and start the GUI, in case python3-tk is missing:
 
    - ``sudo apt install python3-tk``   
   
