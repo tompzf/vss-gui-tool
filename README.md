@@ -41,7 +41,9 @@ This repository contains the GUI tool for the selection and addition of signals 
 3. Install the required Python packages:
    - `pip install --upgrade pip`
    - `pip install anytree PyYAML screeninfo graphql-core`
-4. Start the GUI script:
+4. You can go to 5 and start the GUI, in case python3-tk is missing:
+   - `sudo apt install python3-tk`   
+5. Start the GUI script:
    - `.venv/bin/python scripts/gui/vss_gui.py`
 
 ## Running the GUI in Docker 

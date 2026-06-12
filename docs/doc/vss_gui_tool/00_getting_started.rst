@@ -43,34 +43,47 @@ Running the GUI locally
 -----------------------
 
 1. Update the submodules linked to the repository:
-   - `git submodule update --init --recursive`
+
+   - ``git submodule update --init --recursive``
   
 2. Create and activate a Python virtual environment:
    
-   - `python3 -m venv .venv`
-   - `source .venv/bin/activate`
+   - ``python3 -m venv .venv``
+   - ``source .venv/bin/activate``
   
 3. Install the required Python packages:
    
-   - `pip install --upgrade pip`
-   - `pip install anytree PyYAML screeninfo graphql-core`
+   - ``pip install --upgrade pip``
+   - ``pip install anytree PyYAML screeninfo graphql-core``
+
+4. You can go to step 5 and start the GUI, in casee python3-tk is missing:
+
+   - ``sudo apt install python3-tk``   
   
-4. Start the GUI script:
+5. Start the GUI script:
    
-   - `.venv/bin/python scripts/gui/vss_gui.py`
+   - ``.venv/bin/python scripts/gui/vss_gui.py``
 
 Running the GUI in Docker 
 -------------------------
 
 1. Update the repository submodules:
-   - `git submodule update --init --recursive`
+
+   - ``git submodule update --init --recursive``
+
 2. Build the container image:
-   - `cd container`
-   - `./build.sh`
-3. Run the container with X11 forwarding enabled:
-   - `docker run -ti -e DISPLAY=$(hostname).local:0 -it vss_gui:latest`
-4. Inside the running container, start the GUI:
-   - `python /app/gui/vss_gui.py`
+
+   - ``cd container``
+   - ``./build.sh``
+
+4. Run the container with X11 forwarding enabled:
+
+   - ``docker run -ti -e DISPLAY=$(hostname).local:0 -it vss_gui:latest``
+
+
+     
+1. Inside the running container, start the GUI:
+   - ``python /app/gui/vss_gui.py``
 
 Notes 
 -----
