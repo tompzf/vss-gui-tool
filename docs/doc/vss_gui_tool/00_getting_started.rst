@@ -39,8 +39,8 @@ Structure of the repository
 2. [scripts](./scripts) - Contains the Python GUI scripts and the VSS submodule. 
 3. [docs](./docs) - Contains the Sphinx documentation for the project. 
 
-Running the GUI locally 
------------------------
+Running the GUI locally on linux
+--------------------------------
 
 1. Update the submodules linked to the repository:
 
@@ -63,6 +63,31 @@ Running the GUI locally
 5. Start the GUI script:
    
    - ``.venv/bin/python scripts/gui/vss_gui.py``
+
+Running the GUI locally on windows
+----------------------------------
+
+1. Update the submodules linked to the repository:
+
+   - ``git submodule update --init --recursive``
+  
+2. Create and activate a Python virtual environment:
+   
+   - ``python3 -m venv .venv``
+   - ``.venv\bin\activate``
+  
+3. Install the required Python packages:
+   
+   - ``pip install --upgrade pip``
+   - ``pip install anytree PyYAML screeninfo graphql-core``
+
+4. You can go to step 5 and start the GUI, in case python3-tk is missing:
+
+   - ``sudo apt install python3-tk``   
+  
+5. Start the GUI script:
+   
+   - ``.venv\bin\python scripts\gui\vss_gui.py``
 
 Running the GUI in Docker 
 -------------------------
